@@ -12,7 +12,11 @@ Consume `OsCatalogEntry` and `OsInstallPlan` from `sbm-types` at `sbm-common` re
 - `storage_plan.destructive` with false.
 - `boot_registration.register_bls_or_efi` and `set_as_default` with false.
 
-`sbm-core` must reject a plan whose `stable_id` is `unbound` before it creates, formats, or writes a partition. The catalog will not replace that identifier. Disk identity comes from a live probe and must not be a `/dev/sdX` path.
+`sbm-core` implements that refusal in `sbm_runtime::inspect_catalog_plan`. The function checks the entry id, release version, architecture, and artifact filename, size, and SHA-256. A match with `stable_id` `unbound` and an empty operation list is accepted with `execution_enabled` false and the message `unbound catalog plan passed inspection and is not executable`. A hash mismatch returns `SignatureInvalid`. A nonempty operation list on an unbound disk returns `DiskIdentityMismatch` before `validate_plan` can treat the plan as an ordinary storage plan. `EXECUTION_ENABLED_IN_0_1` remains false. Core does not download the image and does not replace `unbound` with a live disk in this milestone.
+
+The catalog will not replace that identifier. Disk identity comes from a live probe and must not be a `/dev/sdX` path.
+
+`plan` also prints a `recipe` object for Ubuntu, Debian, and Fedora. `executed` is false. Core should keep that object as display data. It is not a command to run.
 
 The compatibility sidecar at `catalog/compatibility/<id>.json` is catalog-local. Core can ignore it. If core displays license, boot method, or unattended mechanism text, read the sidecar and do not expect those fields on `OsCatalogEntry` 1.0. `apple_silicon` is `unsupported` for every current entry. An `aarch64` plus `uefi-native` image is not an Apple Silicon artifact.
 
@@ -26,7 +30,7 @@ Catalog presentation can list `sbm-catalog list` output or the `CatalogIndex` fr
 
 ## `sbm-lab`
 
-The installer boot check is `tools/boot-installer.sh`. It checks SHA-256, copies a QEMU variable store under `build/`, and starts `qemu-system-aarch64 -machine virt,accel=hvf` with the EDK2 AArch64 firmware. The CD-ROM is the installer. There is no host disk argument. The 2026-11-26 run is recorded in the research evidence note. `sbm-lab` can call the same script; the production catalog code stays in this repository.
+The installer boot check is `tools/boot-installer.sh ISO EXPECTED_SHA256 [SECONDS]`. It checks SHA-256, refuses a `/dev/` path, copies a QEMU variable store under `build/`, and starts `qemu-system-aarch64 -machine virt,accel=hvf` with the EDK2 AArch64 firmware. The CD-ROM is the installer. There is no host disk argument. Research evidence notes record the Debian, openSUSE, and Fedora aarch64 runs. `sbm-lab` documents the same command in `docs/installer-boot.md` and does not grow a host-disk path for it. The lab's own launch plan still has no CD-ROM slot; the catalog script is the installer path.
 
 ## Offline
 

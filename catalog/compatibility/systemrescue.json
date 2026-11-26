@@ -27,8 +27,10 @@
       ],
       "signature_urls": [
         "https://www.system-rescue.org/releases/13.03/systemrescue-13.03-amd64.iso.asc"
-      ]
+      ],
+      "authenticity": "unverified-signature",
+      "pinned_key": "systemrescue-dupoux.asc"
     }
   ],
-  "limitations": "Live recovery image, not an operating-system installer. The 13.03 page documented amd64 only, so arm64 is not cataloged. The .asc signature was not verified. direct_installer_boot here means boot the live image. The 1 GiB disk figure is a catalog floor for the live environment, not an installed system."
+  "limitations": "Live recovery image, not an operating-system installer. The 13.03 page documented amd64 only, so arm64 is not cataloged. The .asc file is an image signature, sigclass 0x00, from signing subkey 3B0FEA9BE13CA3C9. Checking it against the checksum file produced a bad signature. The ISO itself was not verified, so automatic download is disabled. direct_installer_boot here means boot the live image. The 1 GiB disk figure is a catalog floor for the live environment, not an installed system."
 }

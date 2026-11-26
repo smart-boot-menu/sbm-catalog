@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "ubuntu",
+  "mechanism": "autoinstall",
+  "stability": "stable",
+  "executed": false,
+  "answers": {
+    "version": 1,
+    "interactive-sections": ["storage"],
+    "locale": "en_US.UTF-8"
+  },
+  "notes": "Storage stays interactive. No disk layout is declared, and this recipe is not applied."
+}

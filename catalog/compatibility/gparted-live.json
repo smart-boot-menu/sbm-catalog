@@ -27,8 +27,10 @@
       ],
       "signature_urls": [
         "https://gparted.org/gparted-live/stable/CHECKSUMS.TXT.gpg"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "gparted-steven-shiau.asc"
     }
   ],
-  "limitations": "Live partition editor, not an operating-system installer. CHECKSUMS.TXT on 2026-11-26 listed the amd64 1.8.1-6 image. i686 was not in that file. The size came from an HTTP HEAD. The signature was not verified. The 1 GiB disk figure is a catalog floor for the live environment."
+  "limitations": "Live partition editor, not an operating-system installer. CHECKSUMS.TXT on 2026-11-26 listed the amd64 1.8.1-6 image. i686 was not in that file. The size came from an HTTP HEAD. CHECKSUMS.TXT.gpg was verified on 2026-11-26 with Steven Shiau key 8E94C9CD163E3FB0. That signature covers the checksum document, so automatic download is allowed. The 1 GiB disk figure is a catalog floor for the live environment."
 }

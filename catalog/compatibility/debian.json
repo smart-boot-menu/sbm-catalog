@@ -31,7 +31,9 @@
       ],
       "signature_urls": [
         "https://cdimage.debian.org/debian-cd/13.8.0/amd64/iso-cd/SHA256SUMS.sign"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "debian-cd.asc"
     },
     {
       "filename": "debian-13.8.0-arm64-netinst.iso",
@@ -47,8 +49,10 @@
       ],
       "signature_urls": [
         "https://cdimage.debian.org/debian-cd/13.8.0/arm64/iso-cd/SHA256SUMS.sign"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "debian-cd.asc"
     }
   ],
-  "limitations": "Network installer. The amd64 SHA256SUMS signature was verified with Debian CD signing key DA87E80D6294BE9B. The arm64 image hash matches the arm64 SHA256SUMS retrieved on 2026-11-26. The automated signature test checks the amd64 SHA256SUMS.sign file. The arm64 directory lists SHA256SUMS.sign, and that signature was not checked by the fixture test. aarch64 is generic UEFI, not Apple Silicon. debian-edu and debian-mac images in the same sums file are not cataloged. RAM and disk figures are catalog installer floors."
+  "limitations": "Network installer. Both amd64 and arm64 SHA256SUMS.sign files were verified on 2026-11-26 with Debian CD signing key DA87E80D6294BE9B. The signatures cover the checksum documents, so automatic download is allowed. aarch64 is generic UEFI, not Apple Silicon. debian-edu and debian-mac images in the same sums file are not cataloged. RAM and disk figures are catalog installer floors."
 }

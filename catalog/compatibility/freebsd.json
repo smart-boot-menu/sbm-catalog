@@ -29,7 +29,9 @@
       "checksum_urls": [
         "https://download.freebsd.org/releases/ISO-IMAGES/15.1/CHECKSUM.SHA256-FreeBSD-15.1-RELEASE-amd64"
       ],
-      "signature_urls": []
+      "signature_urls": [],
+      "authenticity": "checksum-only",
+      "pinned_key": ""
     },
     {
       "filename": "FreeBSD-15.1-RELEASE-arm64-aarch64-bootonly.iso",
@@ -43,8 +45,10 @@
       "checksum_urls": [
         "https://download.freebsd.org/releases/ISO-IMAGES/15.1/CHECKSUM.SHA256-FreeBSD-15.1-RELEASE-arm64-aarch64"
       ],
-      "signature_urls": []
+      "signature_urls": [],
+      "authenticity": "checksum-only",
+      "pinned_key": ""
     }
   ],
-  "limitations": "bootonly images need a network to fetch packages. 15.2 was still BETA3 on 2026-11-20 and is not cataloged. No detached CHECKSUM signature was found at the guessed .asc URL. aarch64 is generic UEFI, not Apple Silicon. The install strategy boots the installer; it does not apply a prebuilt disk image. RAM and disk figures are catalog installer floors."
+  "limitations": "bootonly images need a network to fetch packages. 15.2 was still BETA3 on 2026-11-20 and is not cataloged. The 15.1 ISO directory publishes CHECKSUM.SHA256 and CHECKSUM.SHA512 and no signature. Authenticity is checksum-only and automatic download is disabled. aarch64 is generic UEFI, not Apple Silicon. The install strategy boots the installer; it does not apply a prebuilt disk image. RAM and disk figures are catalog installer floors."
 }

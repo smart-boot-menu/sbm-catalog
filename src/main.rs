@@ -3,9 +3,11 @@ use sbm_catalog::catalog::{Catalog, parse_arch, parse_platform};
 use sbm_catalog::download::{DownloadRequest, download, import_user_image};
 use sbm_catalog::error::{Error, Result};
 use sbm_catalog::plan::{assert_plan_does_not_write, installer_plan};
-use sbm_catalog::query::{Selection, list_lines, resolve, search};
+use sbm_catalog::query::{Selection, ensure_download_allowed, list_lines, resolve, search};
+use sbm_catalog::recipe::load_recipe;
 use sbm_catalog::tuf::{PublishRequest, publish, verify_repository};
-use sbm_catalog::upstream::{signed_text_contains_sha256, verify_cleartext, verify_detached};
+use sbm_catalog::upstream::verify_fixture_manifest;
+use serde::Serialize;
 use std::num::NonZeroU64;
 use std::path::PathBuf;
 
@@ -66,6 +68,14 @@ enum Command {
         version: Option<String>,
         #[arg(long)]
         allow_loopback_http: bool,
+        /// Download a checksum-only or unverified-signature image.
+        ///
+        /// A checksum from the same place as the image is not upstream authentication.
+        #[arg(long)]
+        allow_unauthenticated: bool,
+        /// Use a complete verified file in the cache and do not open the network.
+        #[arg(long)]
+        offline: bool,
     },
     /// Load TUF metadata and re-read every target.
     Verify {
@@ -112,7 +122,7 @@ enum Command {
         #[arg(long)]
         metadata: Option<PathBuf>,
     },
-    /// Check pinned upstream signatures for Fedora and Debian fixtures.
+    /// Re-verify signed upstream checksum documents against the catalog hashes.
     UpstreamCheck {
         #[arg(long, default_value = "keys/upstream")]
         keys: PathBuf,
@@ -171,15 +181,12 @@ async fn main() -> Result<()> {
             platform,
             version,
             allow_loopback_http,
+            allow_unauthenticated,
+            offline,
         } => {
             let catalog = Catalog::load(&cli.catalog)?;
             let image = resolve(&catalog, &query, &selection(arch, platform, version)?)?;
-            if image.user_supplied_only {
-                return Err(Error::msg(format!(
-                    "{} is user-supplied; import a local image instead of downloading it",
-                    image.entry_id
-                )));
-            }
+            ensure_download_allowed(&image, allow_unauthenticated)?;
             let path = download(DownloadRequest {
                 urls: &image.mirrors,
                 filename: &image.filename,
@@ -187,6 +194,7 @@ async fn main() -> Result<()> {
                 sha256: &image.sha256,
                 cache: &cache,
                 allow_loopback_http,
+                offline,
             })
             .await?;
             println!("{}", path.display());
@@ -227,7 +235,13 @@ async fn main() -> Result<()> {
                 source.unwrap_or_else(|| image.mirrors.first().cloned().unwrap_or_default());
             let plan = installer_plan(&image, &source)?;
             assert_plan_does_not_write(&plan)?;
-            println!("{}", serde_json::to_string_pretty(&plan)?);
+            let recipe = load_recipe(&cli.catalog, &image.entry_id)?;
+            let document = PlanDocument {
+                executed: false,
+                plan,
+                recipe,
+            };
+            println!("{}", serde_json::to_string_pretty(&document)?);
             Ok(())
         }
         Command::Import { id, path, cache } => {
@@ -278,63 +292,17 @@ fn upstream_check(
     keys: &std::path::Path,
     fixtures: &std::path::Path,
 ) -> Result<()> {
-    let fedora_key = std::fs::read_to_string(keys.join("fedora-45.asc"))
-        .map_err(|err| sbm_catalog::error::io_at(keys.join("fedora-45.asc"), err))?;
-    let fedora =
-        std::fs::read(fixtures.join("fedora-45-server-x86_64.CHECKSUM")).map_err(|err| {
-            sbm_catalog::error::io_at(fixtures.join("fedora-45-server-x86_64.CHECKSUM"), err)
-        })?;
-    verify_cleartext(&fedora_key, &fedora)?;
-    let fedora_text = String::from_utf8_lossy(&fedora);
-    let debian_key = std::fs::read_to_string(keys.join("debian-cd.asc"))
-        .map_err(|err| sbm_catalog::error::io_at(keys.join("debian-cd.asc"), err))?;
-    let debian_sums =
-        std::fs::read(fixtures.join("debian-13.8.0-amd64-SHA256SUMS")).map_err(|err| {
-            sbm_catalog::error::io_at(fixtures.join("debian-13.8.0-amd64-SHA256SUMS"), err)
-        })?;
-    let debian_sig =
-        std::fs::read(fixtures.join("debian-13.8.0-amd64-SHA256SUMS.sign")).map_err(|err| {
-            sbm_catalog::error::io_at(fixtures.join("debian-13.8.0-amd64-SHA256SUMS.sign"), err)
-        })?;
-    verify_detached(&debian_key, &debian_sig, &debian_sums)?;
     let catalog = Catalog::load(catalog_root)?;
-    let fedora_entry = catalog
-        .get("fedora")
-        .ok_or_else(|| Error::msg("fedora is not in the catalog"))?;
-    for artifact in fedora_entry
-        .entry
-        .releases
-        .iter()
-        .flat_map(|release| &release.artifacts)
-    {
-        if artifact.filename.contains("x86_64")
-            && !signed_text_contains_sha256(&fedora_text, &artifact.filename, &artifact.sha256)
-        {
-            return Err(Error::msg(format!(
-                "{} is not in the signed Fedora CHECKSUM",
-                artifact.filename
-            )));
-        }
-    }
-    let debian_text = String::from_utf8_lossy(&debian_sums);
-    let debian_entry = catalog
-        .get("debian")
-        .ok_or_else(|| Error::msg("debian is not in the catalog"))?;
-    for artifact in debian_entry
-        .entry
-        .releases
-        .iter()
-        .flat_map(|release| &release.artifacts)
-    {
-        if artifact.filename.contains("amd64")
-            && !signed_text_contains_sha256(&debian_text, &artifact.filename, &artifact.sha256)
-        {
-            return Err(Error::msg(format!(
-                "{} is not in the signed Debian SHA256SUMS",
-                artifact.filename
-            )));
-        }
-    }
-    println!("upstream signatures match the pinned Fedora and Debian catalog hashes");
+    verify_fixture_manifest(&catalog, keys, fixtures)?;
+    println!(
+        "upstream signatures match the catalog hashes; checksum-only and unverified-signature entries stay download-disabled"
+    );
     Ok(())
+}
+
+#[derive(Serialize)]
+struct PlanDocument {
+    executed: bool,
+    plan: sbm_types::OsInstallPlan,
+    recipe: Option<sbm_catalog::recipe::InstallRecipe>,
 }

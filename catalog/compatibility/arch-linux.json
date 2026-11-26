@@ -27,8 +27,10 @@
       ],
       "signature_urls": [
         "https://geo.mirror.pkgbuild.com/iso/2026.11.01/archlinux-2026.11.01-x86_64.iso.sig"
-      ]
+      ],
+      "authenticity": "unverified-signature",
+      "pinned_key": "archlinux-pierre.asc"
     }
   ],
-  "limitations": "Official x86_64 ISO only. Arch Linux ARM is a separate project and is not implied by this entry. The .sig file was retrieved and was not verified. The dated ISO path is pinned; the latest symlink is not a catalog mirror. Hybrid BIOS and UEFI describes the installer media. RAM and disk figures are catalog installer floors."
+  "limitations": "Official x86_64 ISO only. Arch Linux ARM is a separate project and is not implied by this entry. The .sig file is an image signature from key 76A5EF9054449A5C and does not cover sha256sums.txt. The ISO was not verified, so automatic download is disabled. The dated ISO path is pinned; the latest symlink is not a catalog mirror. Hybrid BIOS and UEFI describes the installer media. RAM and disk figures are catalog installer floors."
 }

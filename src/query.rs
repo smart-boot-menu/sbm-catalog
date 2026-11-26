@@ -24,6 +24,8 @@ pub struct ResolvedImage {
     pub sha256: String,
     pub mirrors: Vec<String>,
     pub user_supplied_only: bool,
+    pub authenticity: String,
+    pub pinned_key: String,
     pub apple_silicon: String,
     pub unattended: Vec<String>,
     pub limitations: String,
@@ -148,6 +150,14 @@ fn image_from(
         sha256: artifact.sha256.clone(),
         mirrors: artifact.mirrors.clone(),
         user_supplied_only: artifact.user_supplied_only,
+        authenticity: profile
+            .artifact(&artifact.filename)
+            .map(|item| item.authenticity.clone())
+            .unwrap_or_default(),
+        pinned_key: profile
+            .artifact(&artifact.filename)
+            .map(|item| item.pinned_key.clone())
+            .unwrap_or_default(),
         apple_silicon: apple_silicon.to_string(),
         unattended: profile
             .automated_install
@@ -180,17 +190,47 @@ fn no_match_message(catalog: &Catalog, query: &str, selection: &Selection) -> St
     message
 }
 
+/// Automatic download is allowed only after a pinned key has authenticated
+/// upstream metadata or the image itself. A checksum is not that proof.
+pub fn ensure_download_allowed(image: &ResolvedImage, allow_unauthenticated: bool) -> Result<()> {
+    if image.user_supplied_only || image.authenticity == "user-supplied" {
+        return Err(Error::msg(format!(
+            "{} is user-supplied; import a local image instead of downloading it",
+            image.entry_id
+        )));
+    }
+    if matches!(
+        image.authenticity.as_str(),
+        "signed-metadata" | "signed-image"
+    ) {
+        return Ok(());
+    }
+    if allow_unauthenticated
+        && matches!(
+            image.authenticity.as_str(),
+            "checksum-only" | "unverified-signature"
+        )
+    {
+        return Ok(());
+    }
+    Err(Error::msg(format!(
+        "{} authenticity is {}; a checksum is not upstream authentication. Pass --allow-unauthenticated to download anyway",
+        image.entry_id, image.authenticity
+    )))
+}
+
 pub fn list_lines(images: &[ResolvedImage]) -> String {
     let mut lines = Vec::new();
     for image in images {
         lines.push(format!(
-            "{}\t{}\t{}\t{}\t{}\t{}",
+            "{}\t{}\t{}\t{}\t{}\t{}\t{}",
             image.entry_id,
             image.version,
             image.arch,
             image.platforms.join(","),
             image.filename,
-            image.sha256
+            image.sha256,
+            image.authenticity
         ));
     }
     lines.join("\n")

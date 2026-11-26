@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "debian",
+  "mechanism": "preseed",
+  "stability": "stable",
+  "executed": false,
+  "answers": {
+    "debian-installer/locale": "en_US.UTF-8",
+    "mirror/http/hostname": "deb.debian.org"
+  },
+  "notes": "Disk layout, early_command, and late_command are omitted. This recipe is not applied to a disk."
+}

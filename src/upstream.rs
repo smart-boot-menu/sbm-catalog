@@ -1,6 +1,111 @@
+use crate::catalog::Catalog;
 use crate::error::{Error, Result, io_at};
+use serde::Deserialize;
 use std::path::Path;
 use std::process::Command;
+
+#[derive(Debug, Deserialize)]
+struct FixtureManifest {
+    checks: Vec<FixtureCheck>,
+}
+
+#[derive(Debug, Deserialize)]
+struct FixtureCheck {
+    key: String,
+    message: String,
+    #[serde(default)]
+    signature: Option<String>,
+    cleartext: bool,
+    catalog_id: String,
+    filename: String,
+    algorithm: String,
+}
+
+/// Re-verify every signed checksum document and require the catalog hash to be inside it.
+pub fn verify_fixture_manifest(catalog: &Catalog, keys: &Path, fixtures: &Path) -> Result<()> {
+    let manifest_path = fixtures.join("manifest.json");
+    let manifest_bytes = std::fs::read(&manifest_path).map_err(|err| io_at(&manifest_path, err))?;
+    let manifest: FixtureManifest = serde_json::from_slice(&manifest_bytes)
+        .map_err(|err| Error::msg(format!("{}: {err}", manifest_path.display())))?;
+    if manifest.checks.is_empty() {
+        return Err(Error::msg("upstream fixture manifest has no checks"));
+    }
+    for check in &manifest.checks {
+        let key_path = keys.join(&check.key);
+        let key = std::fs::read_to_string(&key_path).map_err(|err| io_at(&key_path, err))?;
+        let message_path = fixtures.join(&check.message);
+        let message = std::fs::read(&message_path).map_err(|err| io_at(&message_path, err))?;
+        if check.cleartext {
+            verify_cleartext(&key, &message)?;
+        } else {
+            let signature_name = check.signature.as_deref().ok_or_else(|| {
+                Error::msg(format!(
+                    "{} needs a detached signature file",
+                    check.filename
+                ))
+            })?;
+            let signature_path = fixtures.join(signature_name);
+            let signature =
+                std::fs::read(&signature_path).map_err(|err| io_at(&signature_path, err))?;
+            verify_detached(&key, &signature, &message)?;
+        }
+        let loaded = catalog
+            .get(&check.catalog_id)
+            .ok_or_else(|| Error::msg(format!("{} is not in the catalog", check.catalog_id)))?;
+        let artifact = loaded
+            .entry
+            .releases
+            .iter()
+            .flat_map(|release| &release.artifacts)
+            .find(|artifact| artifact.filename == check.filename)
+            .ok_or_else(|| Error::msg(format!("{} is not a catalog artifact", check.filename)))?;
+        let text = String::from_utf8_lossy(&message);
+        let present = match check.algorithm.as_str() {
+            "sha256" => signed_text_contains_sha256(&text, &artifact.filename, &artifact.sha256),
+            "sha512" => {
+                let sha512 = artifact.sha512.as_deref().ok_or_else(|| {
+                    Error::msg(format!("{} has no catalog sha512", artifact.filename))
+                })?;
+                text_contains_sha512(&text, &artifact.filename, sha512)
+            }
+            other => return Err(Error::msg(format!("unsupported fixture algorithm {other}"))),
+        };
+        if !present {
+            return Err(Error::msg(format!(
+                "{} catalog hash is not in the signed document {}",
+                check.filename, check.message
+            )));
+        }
+        let profile = loaded.profile.artifact(&artifact.filename).ok_or_else(|| {
+            Error::msg(format!(
+                "{} has no compatibility profile",
+                artifact.filename
+            ))
+        })?;
+        if profile.authenticity != "signed-metadata" || profile.pinned_key != check.key {
+            return Err(Error::msg(format!(
+                "{} must be signed-metadata pinned to {}",
+                artifact.filename, check.key
+            )));
+        }
+    }
+    for loaded in &catalog.entries {
+        for artifact in &loaded.profile.artifacts {
+            if artifact.authenticity == "signed-metadata"
+                && !manifest
+                    .checks
+                    .iter()
+                    .any(|check| check.filename == artifact.filename)
+            {
+                return Err(Error::msg(format!(
+                    "{} is signed-metadata but has no upstream fixture",
+                    artifact.filename
+                )));
+            }
+        }
+    }
+    Ok(())
+}
 
 /// Confirm a pinned OpenPGP key signs `message`.
 ///

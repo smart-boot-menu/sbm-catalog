@@ -91,6 +91,19 @@ pub async fn publish(request: PublishRequest) -> Result<PublishedRepository> {
         staged.push(stage(&loaded.path, &staging, "entry")?);
         staged.push(stage(&loaded.profile_path, &staging, "compat")?);
     }
+    let recipes = request.catalog.join("recipes");
+    if recipes.is_dir() {
+        let mut paths: Vec<_> = fs::read_dir(&recipes)
+            .map_err(|err| io_at(&recipes, err))?
+            .flatten()
+            .map(|entry| entry.path())
+            .filter(|path| path.extension().and_then(|ext| ext.to_str()) == Some("json"))
+            .collect();
+        paths.sort();
+        for path in paths {
+            staged.push(stage(&path, &staging, "recipe")?);
+        }
+    }
     let root_path = request.key_dir.join("1.root.json");
     let mut editor = RepositoryEditor::new(&root_path).await.map_err(tough_err)?;
     for path in &staged {

@@ -2,7 +2,7 @@
 
 Declarative operating system catalog for Smart Boot Menu. Entries describe where an official image lives, how to check it, which machines can boot it, and which unattended mechanisms exist. The tools resolve those entries, download and hash images, and publish the catalog as a [TUF](https://theupdateframework.github.io/) repository.
 
-The catalog does not install an operating system and does not write a physical disk. `sbm-catalog plan` emits an `OsInstallPlan` whose storage target is `unbound` and whose operation list is empty. Automated installation is a later milestone.
+The catalog does not install an operating system and does not write a physical disk. `sbm-catalog plan` emits an `OsInstallPlan` whose storage target is `unbound` and whose operation list is empty, plus a declarative recipe when one exists. Ubuntu, Debian, and Fedora recipes set `executed` to false. Automated installation is not run.
 
 ## Catalog
 
@@ -25,7 +25,11 @@ Pinned releases, retrieved on 2026-11-26:
 | SystemRescue | 13.03 | x86_64 |
 | GParted Live | 1.8.1-6 | x86_64 |
 
-`aarch64` means generic UEFI. None of these images are offered for `apple-silicon-m1n1-uboot`. Windows images are not downloaded; `import` records a local hash. See [docs/UPSTREAM_PROVENANCE.md](docs/UPSTREAM_PROVENANCE.md) and [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
+`aarch64` means generic UEFI. None of these images are offered for `apple-silicon-m1n1-uboot`. `list --arch` and `list --platform` drop images that do not match.
+
+Each compatibility artifact has an `authenticity` value. `signed-metadata` is a pinned key over a checksum document. `unverified-signature` is a signature URL whose payload was not checked against the image. `checksum-only` is a hash with no signature. `user-supplied` is Windows. `download` fetches only `signed-metadata` and `signed-image` unless `--allow-unauthenticated` is set. That flag does not fetch Windows. `--offline` uses a complete verified file in the cache and does not open the network. A partial download records `cache/<filename>.partial.json`; a journal that names a different hash deletes the partial and starts over.
+
+Windows images are not downloaded; `import` records a local hash. See [docs/UPSTREAM_PROVENANCE.md](docs/UPSTREAM_PROVENANCE.md) and [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
 ## Commands
 
@@ -35,7 +39,9 @@ sbm-catalog list --arch aarch64 --platform uefi-native
 sbm-catalog search ubuntu
 sbm-catalog resolve ubuntu --arch x86_64
 sbm-catalog download debian --arch aarch64 --platform uefi-native
-sbm-catalog plan debian --arch aarch64 --platform uefi-native
+sbm-catalog download nixos --arch x86_64
+sbm-catalog download debian --arch aarch64 --offline
+sbm-catalog plan ubuntu --arch x86_64
 sbm-catalog import windows /path/to/image.iso
 sbm-catalog export-offline build/offline
 sbm-catalog publish --keys build/dev-keys --out build/repository

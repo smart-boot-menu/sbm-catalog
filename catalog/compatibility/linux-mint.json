@@ -27,8 +27,10 @@
       ],
       "signature_urls": [
         "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt.gpg"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "linux-mint-iso.asc"
     }
   ],
-  "limitations": "Cinnamon 22.3 only. Mate and Xfce hashes were present in the same sums file and are not pinned. No arm64 image is published in that directory. The signature file was not verified. RAM and disk figures are catalog installer floors."
+  "limitations": "Cinnamon 22.3 only. Mate and Xfce hashes were present in the same sums file and are not pinned. No arm64 image is published in that directory. sha256sum.txt.gpg was verified on 2026-11-26 with Linux Mint ISO Signing Key 300F846BA25BAE09. That signature covers the checksum document, so automatic download is allowed. RAM and disk figures are catalog installer floors."
 }

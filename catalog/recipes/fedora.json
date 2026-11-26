@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "fedora",
+  "mechanism": "kickstart",
+  "stability": "stable",
+  "executed": false,
+  "answers": {
+    "text": true,
+    "reboot": false,
+    "clearpart": "none"
+  },
+  "notes": "No %post section is present. clearpart none does not wipe a disk. This recipe is not executed."
+}

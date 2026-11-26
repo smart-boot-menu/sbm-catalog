@@ -26,8 +26,10 @@
       ],
       "signature_urls": [
         "https://enterprise.proxmox.com/iso/proxmox-ve_9.3-1.iso.asc"
-      ]
+      ],
+      "authenticity": "unverified-signature",
+      "pinned_key": "proxmox-release-trixie.asc"
     }
   ],
-  "limitations": "The ISO filename has no architecture token. The compatibility map records x86_64. Older 9.2, 9.1, 8.4, and 7.4 hashes were visible on the download page and are not pinned. The .asc signature was not verified. This boots the installer; it does not apply a cluster configuration. RAM and disk figures are catalog installer floors."
+  "limitations": "The ISO filename has no architecture token. The compatibility map records x86_64. Older 9.2, 9.1, 8.4, and 7.4 hashes were visible on the download page and are not pinned. The .asc file contains image signatures, sigclass 0x00. Checking it against the checksum file produced a bad signature, so the signature does not cover that file. The ISO itself was not verified, so automatic download is disabled. This boots the installer; it does not apply a cluster configuration. RAM and disk figures are catalog installer floors."
 }

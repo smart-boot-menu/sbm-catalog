@@ -1,0 +1,92 @@
+{
+  "checks": [
+    {
+      "key": "fedora-45.asc",
+      "message": "fedora-45-server-x86_64.CHECKSUM",
+      "cleartext": true,
+      "catalog_id": "fedora",
+      "filename": "Fedora-Server-netinst-x86_64-45-1.4.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "fedora-45.asc",
+      "message": "fedora-45-server-aarch64.CHECKSUM",
+      "cleartext": true,
+      "catalog_id": "fedora",
+      "filename": "Fedora-Server-netinst-aarch64-45-1.4.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "debian-cd.asc",
+      "message": "debian-13.8.0-amd64-SHA256SUMS",
+      "signature": "debian-13.8.0-amd64-SHA256SUMS.sign",
+      "cleartext": false,
+      "catalog_id": "debian",
+      "filename": "debian-13.8.0-amd64-netinst.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "debian-cd.asc",
+      "message": "debian-13.8.0-arm64-SHA256SUMS",
+      "signature": "debian-13.8.0-arm64-SHA256SUMS.sign",
+      "cleartext": false,
+      "catalog_id": "debian",
+      "filename": "debian-13.8.0-arm64-netinst.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "ubuntu-cdimage.asc",
+      "message": "ubuntu-26.04-amd64-SHA256SUMS",
+      "signature": "ubuntu-26.04-amd64-SHA256SUMS.gpg",
+      "cleartext": false,
+      "catalog_id": "ubuntu",
+      "filename": "ubuntu-26.04.1-live-server-amd64.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "ubuntu-cdimage.asc",
+      "message": "ubuntu-26.04-arm64-SHA256SUMS",
+      "signature": "ubuntu-26.04-arm64-SHA256SUMS.gpg",
+      "cleartext": false,
+      "catalog_id": "ubuntu",
+      "filename": "ubuntu-26.04.1-live-server-arm64.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "linux-mint-iso.asc",
+      "message": "linuxmint-22.3-sha256sum.txt",
+      "signature": "linuxmint-22.3-sha256sum.txt.gpg",
+      "cleartext": false,
+      "catalog_id": "linux-mint",
+      "filename": "linuxmint-22.3-cinnamon-64bit.iso",
+      "algorithm": "sha256"
+    },
+    {
+      "key": "opensuse-leap.asc",
+      "message": "opensuse-leap-16.1-x86_64.sha512",
+      "signature": "opensuse-leap-16.1-x86_64.sha512.asc",
+      "cleartext": false,
+      "catalog_id": "opensuse-leap",
+      "filename": "Leap-16.1-online-installer-x86_64.install.iso",
+      "algorithm": "sha512"
+    },
+    {
+      "key": "opensuse-leap.asc",
+      "message": "opensuse-leap-16.1-aarch64.sha512",
+      "signature": "opensuse-leap-16.1-aarch64.sha512.asc",
+      "cleartext": false,
+      "catalog_id": "opensuse-leap",
+      "filename": "Leap-16.1-online-installer-aarch64.install.iso",
+      "algorithm": "sha512"
+    },
+    {
+      "key": "gparted-steven-shiau.asc",
+      "message": "gparted-1.8.1-6-CHECKSUMS.TXT",
+      "signature": "gparted-1.8.1-6-CHECKSUMS.TXT.gpg",
+      "cleartext": false,
+      "catalog_id": "gparted-live",
+      "filename": "gparted-live-1.8.1-6-amd64.iso",
+      "algorithm": "sha256"
+    }
+  ]
+}

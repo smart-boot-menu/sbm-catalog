@@ -26,8 +26,10 @@
         "uefi-native"
       ],
       "checksum_urls": [],
-      "signature_urls": []
+      "signature_urls": [],
+      "authenticity": "user-supplied",
+      "pinned_key": ""
     }
   ],
-  "limitations": "No official consumer ISO hash is pinned. Download is refused until a local import records size and SHA-256. arm64 Windows and Apple Silicon Windows are not cataloged. Unattended setup and WIM apply are recorded and are not executed. Boot configuration data creation remains unresolved. 4096 MiB RAM and 64 GiB disk are Microsoft's published Windows 11 minimums."
+  "limitations": "Authenticity is user-supplied. No official consumer ISO hash is pinned. Download is refused until a local import records size and SHA-256. arm64 Windows and Apple Silicon Windows are not cataloged. Unattended setup and WIM apply are recorded and are not executed. Boot configuration data creation remains unresolved. 4096 MiB RAM and 64 GiB disk are Microsoft's published Windows 11 minimums."
 }

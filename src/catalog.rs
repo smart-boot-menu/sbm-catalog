@@ -1,6 +1,8 @@
-use crate::compat::CompatibilityProfile;
+use crate::compat::{ArtifactProfile, CompatibilityProfile};
 use crate::error::{Error, Result, io_at};
-use sbm_types::{CpuArch, FirmwarePlatform, InstallStrategy, OsCatalogEntry, OsFamily};
+use sbm_types::{
+    CatalogArtifact, CpuArch, FirmwarePlatform, InstallStrategy, OsCatalogEntry, OsFamily,
+};
 use std::collections::{BTreeMap, BTreeSet, HashSet};
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -118,6 +120,26 @@ impl Catalog {
                 &mut filenames,
                 &mut issues,
             );
+        }
+        let subjects: Vec<crate::recipe::RecipeSubject<'_>> = self
+            .entries
+            .iter()
+            .map(|loaded| crate::recipe::RecipeSubject {
+                id: loaded.entry.id.as_str(),
+                mechanisms: loaded
+                    .profile
+                    .automated_install
+                    .mechanisms
+                    .iter()
+                    .map(|item| (item.id.as_str(), item.stability.as_str()))
+                    .collect(),
+            })
+            .collect();
+        for problem in crate::recipe::recipe_problems(&self.root, &subjects) {
+            issues.push(issue(
+                self.root.join("recipes").display().to_string(),
+                problem,
+            ));
         }
         issues
     }
@@ -367,6 +389,7 @@ fn validate_entry(
                         ),
                     ));
                 }
+                validate_authenticity(label, artifact, profile_artifact, issues);
                 for arch_name in &profile_artifact.architectures {
                     match parse_arch(arch_name) {
                         Some(arch) => {
@@ -444,6 +467,130 @@ fn scan_tree(root: &Path, issues: &mut Vec<Issue>) {
             }
         }
     }
+}
+
+fn validate_authenticity(
+    label: &str,
+    artifact: &CatalogArtifact,
+    profile_artifact: &ArtifactProfile,
+    issues: &mut Vec<Issue>,
+) {
+    let kind = profile_artifact.authenticity.as_str();
+    let key_ok = key_name_ok(&profile_artifact.pinned_key);
+    match kind {
+        "signed-metadata" | "signed-image" => {
+            if profile_artifact.signature_urls.is_empty() {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} authenticity {kind} needs a signature URL",
+                        artifact.filename
+                    ),
+                ));
+            }
+            if !key_ok {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} authenticity {kind} needs a pinned public key file name",
+                        artifact.filename
+                    ),
+                ));
+            }
+            if artifact.user_supplied_only {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} cannot be both user-supplied and {kind}",
+                        artifact.filename
+                    ),
+                ));
+            }
+        }
+        "unverified-signature" => {
+            if profile_artifact.signature_urls.is_empty() {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} authenticity unverified-signature needs the signature URL that was not checked",
+                        artifact.filename
+                    ),
+                ));
+            }
+            if !profile_artifact.pinned_key.is_empty() && !key_ok {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} pinned key must be one .asc file name",
+                        artifact.filename
+                    ),
+                ));
+            }
+            if artifact.user_supplied_only {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} cannot be both user-supplied and unverified-signature",
+                        artifact.filename
+                    ),
+                ));
+            }
+        }
+        "checksum-only" => {
+            if !profile_artifact.signature_urls.is_empty()
+                || !profile_artifact.pinned_key.is_empty()
+            {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} checksum-only authenticity cannot claim a signature or a pinned key",
+                        artifact.filename
+                    ),
+                ));
+            }
+            if artifact.user_supplied_only {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} checksum-only authenticity cannot be user-supplied",
+                        artifact.filename
+                    ),
+                ));
+            }
+        }
+        "user-supplied" => {
+            if !artifact.user_supplied_only
+                || !profile_artifact.signature_urls.is_empty()
+                || !profile_artifact.pinned_key.is_empty()
+            {
+                issues.push(issue(
+                    label,
+                    format!(
+                        "{} user-supplied authenticity must match a user-supplied artifact with no pinned key",
+                        artifact.filename
+                    ),
+                ));
+            }
+        }
+        other => issues.push(issue(
+            label,
+            format!(
+                "{} authenticity {other} is not recognized",
+                artifact.filename
+            ),
+        )),
+    }
+}
+
+fn key_name_ok(name: &str) -> bool {
+    !name.is_empty()
+        && !name.contains('/')
+        && !name.contains('\\')
+        && !name.contains("..")
+        && name.ends_with(".asc")
+        && name
+            .chars()
+            .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-' || ch == '.')
 }
 
 fn reject_recipe_text(path: &Path, text: &str) -> Result<()> {

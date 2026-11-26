@@ -27,7 +27,9 @@
       ],
       "signature_urls": [
         "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-x86_64.install.iso.sha512.asc"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "opensuse-leap.asc"
     },
     {
       "filename": "Leap-16.1-online-installer-aarch64.install.iso",
@@ -43,8 +45,10 @@
       ],
       "signature_urls": [
         "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-aarch64.install.iso.sha512.asc"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "opensuse-leap.asc"
     }
   ],
-  "limitations": "Online installer, not the multi-gigabyte offline DVD. SHA-256 was computed locally on 2026-11-26 after the downloaded bytes matched the published SHA-512. The .sha512.asc signatures were not verified. ppc64le and s390x images are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
+  "limitations": "Online installer, not the multi-gigabyte offline DVD. SHA-256 was computed locally on 2026-11-26 after the downloaded bytes matched the published SHA-512. The .sha512.asc signatures were verified on 2026-11-26 with openSUSE Project Signing Key 35A2F86E29B700A4. They cover the SHA-512 documents. The catalog SHA-256 was computed locally after the downloaded bytes matched those SHA-512s. Automatic download is allowed. ppc64le and s390x images are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
 }

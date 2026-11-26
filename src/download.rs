@@ -16,6 +16,15 @@ pub struct DownloadRequest<'a> {
     pub sha256: &'a str,
     pub cache: &'a Path,
     pub allow_loopback_http: bool,
+    /// Return a complete verified cache file and do not open the network.
+    pub offline: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct PartialJournal {
+    filename: String,
+    size_bytes: u64,
+    sha256: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -27,6 +36,32 @@ pub struct ImportRecord {
     pub source_path: String,
 }
 
+fn journal_matches(path: &Path, request: &DownloadRequest<'_>) -> Result<bool> {
+    let bytes = match fs::read(path) {
+        Ok(bytes) => bytes,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(false),
+        Err(err) => return Err(io_at(path, err)),
+    };
+    let journal: PartialJournal = serde_json::from_slice(&bytes).unwrap_or(PartialJournal {
+        filename: String::new(),
+        size_bytes: 0,
+        sha256: String::new(),
+    });
+    Ok(journal.filename == request.filename
+        && journal.size_bytes == request.size_bytes
+        && journal.sha256.eq_ignore_ascii_case(request.sha256))
+}
+
+fn write_journal(path: &Path, request: &DownloadRequest<'_>) -> Result<()> {
+    let journal = PartialJournal {
+        filename: request.filename.to_string(),
+        size_bytes: request.size_bytes,
+        sha256: request.sha256.to_string(),
+    };
+    let bytes = serde_json::to_vec_pretty(&journal).map_err(|err| Error::msg(err.to_string()))?;
+    fs::write(path, bytes).map_err(|err| io_at(path, err))
+}
+
 pub async fn download(request: DownloadRequest<'_>) -> Result<PathBuf> {
     if request.size_bytes == 0 || request.sha256.chars().all(|ch| ch == '0') {
         return Err(Error::msg(
@@ -35,18 +70,39 @@ pub async fn download(request: DownloadRequest<'_>) -> Result<PathBuf> {
     }
     fs::create_dir_all(request.cache).map_err(|err| io_at(request.cache, err))?;
     let destination = request.cache.join(request.filename);
+    let journal_file = request
+        .cache
+        .join(format!("{}.partial.json", request.filename));
     let mut offset = existing_len(&destination)?;
     if offset > request.size_bytes {
         fs::remove_file(&destination).map_err(|err| io_at(&destination, err))?;
         offset = 0;
     }
     if offset == request.size_bytes {
-        if let Err(err) = verify_file(&destination, request.size_bytes, request.sha256) {
-            fs::remove_file(&destination).map_err(|io| io_at(&destination, io))?;
-            return Err(err);
+        if verify_file(&destination, request.size_bytes, request.sha256).is_ok() {
+            fs::remove_file(&journal_file).ok();
+            return Ok(destination);
         }
-        return Ok(destination);
+        fs::remove_file(&destination).map_err(|io| io_at(&destination, io))?;
+        offset = 0;
+        if request.offline {
+            return Err(Error::msg(format!(
+                "offline cache failed verification for {}",
+                request.filename
+            )));
+        }
     }
+    if offset > 0 && !journal_matches(&journal_file, &request)? {
+        fs::remove_file(&destination).ok();
+        offset = 0;
+    }
+    if request.offline {
+        return Err(Error::msg(format!(
+            "offline cache does not contain a complete verified {}",
+            request.filename
+        )));
+    }
+    write_journal(&journal_file, &request)?;
     let client = reqwest::Client::builder()
         .redirect(reqwest::redirect::Policy::limited(5))
         .connect_timeout(Duration::from_secs(20))
@@ -68,6 +124,7 @@ pub async fn download(request: DownloadRequest<'_>) -> Result<PathBuf> {
                         fs::remove_file(&destination).map_err(|io| io_at(&destination, io))?;
                         return Err(err);
                     }
+                    fs::remove_file(&journal_file).ok();
                     return Ok(destination);
                 }
                 last_error = Error::msg(format!(

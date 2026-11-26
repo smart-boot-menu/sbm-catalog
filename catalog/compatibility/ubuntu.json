@@ -31,7 +31,9 @@
       ],
       "signature_urls": [
         "https://releases.ubuntu.com/26.04/SHA256SUMS.gpg"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "ubuntu-cdimage.asc"
     },
     {
       "filename": "ubuntu-26.04.1-live-server-arm64.iso",
@@ -47,8 +49,10 @@
       ],
       "signature_urls": [
         "https://cdimage.ubuntu.com/releases/26.04/release/SHA256SUMS.gpg"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "ubuntu-cdimage.asc"
     }
   ],
-  "limitations": "Live server installer. aarch64 is generic UEFI and is not an Apple Silicon image. RISC-V, ppc64el, and s390x images exist upstream and are not pinned. The SHA256SUMS.gpg file was retrieved on 2026-11-26 and was not cryptographically verified in this milestone. RAM and disk figures are catalog installer floors, not measurements."
+  "limitations": "Live server installer. aarch64 is generic UEFI and is not an Apple Silicon image. RISC-V, ppc64el, and s390x images exist upstream and are not pinned. SHA256SUMS.gpg was verified on 2026-11-26 with Ubuntu CD Image Automatic Signing Key D94AA3F0EFE21092. That signature covers the checksum document, so automatic download is allowed. RAM and disk figures are catalog installer floors, not measurements."
 }

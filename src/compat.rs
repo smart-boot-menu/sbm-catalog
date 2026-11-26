@@ -42,6 +42,23 @@ pub struct ArtifactProfile {
     pub checksum_urls: Vec<String>,
     #[serde(default)]
     pub signature_urls: Vec<String>,
+    /// `signed-metadata`, `signed-image`, `unverified-signature`, `checksum-only`, or `user-supplied`.
+    ///
+    /// `signed-metadata` means a pinned key verified a checksum document.
+    /// A hash stored next to an image is `checksum-only` until that happens.
+    pub authenticity: String,
+    /// File name under `keys/upstream/`. Empty when no key is pinned.
+    #[serde(default)]
+    pub pinned_key: String,
+}
+
+impl ArtifactProfile {
+    pub fn automatic_download(&self) -> bool {
+        matches!(
+            self.authenticity.as_str(),
+            "signed-metadata" | "signed-image"
+        )
+    }
 }
 
 impl CompatibilityProfile {

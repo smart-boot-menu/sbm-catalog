@@ -26,7 +26,9 @@
       ],
       "signature_urls": [
         "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/x86_64/iso/Fedora-Server-45-1.4-x86_64-CHECKSUM"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "fedora-45.asc"
     },
     {
       "filename": "Fedora-Server-netinst-aarch64-45-1.4.iso",
@@ -42,8 +44,10 @@
       ],
       "signature_urls": [
         "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/aarch64/iso/Fedora-Server-45-1.4-aarch64-CHECKSUM"
-      ]
+      ],
+      "authenticity": "signed-metadata",
+      "pinned_key": "fedora-45.asc"
     }
   ],
-  "limitations": "Server netinst compose 45-1.4. Both CHECKSUM files are cleartext-signed and were verified with Fedora 45 key 655A4B02F577861E. DVD images are larger and are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
+  "limitations": "Server netinst compose 45-1.4. Both CHECKSUM files are cleartext-signed and were verified with Fedora 45 key 655A4B02F577861E. Automatic download is allowed because those signatures cover the catalog hashes. DVD images are larger and are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
 }

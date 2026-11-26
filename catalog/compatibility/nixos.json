@@ -25,7 +25,9 @@
       "checksum_urls": [
         "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-x86_64-linux.iso.sha256"
       ],
-      "signature_urls": []
+      "signature_urls": [],
+      "authenticity": "checksum-only",
+      "pinned_key": ""
     },
     {
       "filename": "nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso",
@@ -39,8 +41,10 @@
       "checksum_urls": [
         "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso.sha256"
       ],
-      "signature_urls": []
+      "signature_urls": [],
+      "authenticity": "checksum-only",
+      "pinned_key": ""
     }
   ],
-  "limitations": "Minimal ISO for the 26.05 channel release 26.05.15079.0dc498bfe49b. The .sha256 files are hashes, not signatures. aarch64 is generic UEFI, not Apple Silicon. The 26.11-small channel is not this pin. RAM and disk figures are catalog installer floors."
+  "limitations": "Minimal ISO for the 26.05 channel release 26.05.15079.0dc498bfe49b. The .sha256 files are hashes, not signatures. No .iso.asc or .sha256.asc was published at the URLs that were tried, so authenticity is checksum-only and automatic download is disabled. aarch64 is generic UEFI, not Apple Silicon. The 26.11-small channel is not this pin. RAM and disk figures are catalog installer floors."
 }
