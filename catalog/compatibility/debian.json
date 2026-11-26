@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "debian",
+  "license": "DFSG free software; individual image components keep their own licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "preseed",
+        "stability": "stable"
+      },
+      {
+        "id": "autoinstall",
+        "stability": "unsupported"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "debian-13.8.0-amd64-netinst.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://cdimage.debian.org/debian-cd/13.8.0/amd64/iso-cd/SHA256SUMS"
+      ],
+      "signature_urls": [
+        "https://cdimage.debian.org/debian-cd/13.8.0/amd64/iso-cd/SHA256SUMS.sign"
+      ]
+    },
+    {
+      "filename": "debian-13.8.0-arm64-netinst.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://cdimage.debian.org/debian-cd/13.8.0/arm64/iso-cd/SHA256SUMS"
+      ],
+      "signature_urls": [
+        "https://cdimage.debian.org/debian-cd/13.8.0/arm64/iso-cd/SHA256SUMS.sign"
+      ]
+    }
+  ],
+  "limitations": "Network installer. The amd64 SHA256SUMS signature was verified with Debian CD signing key DA87E80D6294BE9B. The arm64 image hash matches the arm64 SHA256SUMS retrieved on 2026-11-26. The automated signature test checks the amd64 SHA256SUMS.sign file. The arm64 directory lists SHA256SUMS.sign, and that signature was not checked by the fixture test. aarch64 is generic UEFI, not Apple Silicon. debian-edu and debian-mac images in the same sums file are not cataloged. RAM and disk figures are catalog installer floors."
+}

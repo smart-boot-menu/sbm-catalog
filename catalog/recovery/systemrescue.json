@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "id": "systemrescue",
+  "name": "SystemRescue",
+  "os_family": "recovery",
+  "vendor": "SystemRescue",
+  "homepage_url": "https://www.system-rescue.org/",
+  "releases": [
+    {
+      "version": "13.03",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 1,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "systemrescue-13.03-amd64.iso",
+          "size_bytes": 1434386432,
+          "sha256": "b71b98ba6b92145524cb1a72206b9888a59861ad6fb05d127faf618ca0136891",
+          "mirrors": [
+            "https://fastly-cdn.system-rescue.org/releases/13.03/systemrescue-13.03-amd64.iso"
+          ],
+          "user_supplied_only": false,
+          "sha512": "2be1fcc2c70ebe863e96d8df115098204495f64c321f01b6a04434367967f636a91b91e4ecb7eb4ea34e1bd9321cd5b6107b49e905a59a4fcae98e6d9d7b57c9",
+          "upstream_signature_url": "https://www.system-rescue.org/releases/13.03/systemrescue-13.03-amd64.iso.asc"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

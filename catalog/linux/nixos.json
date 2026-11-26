@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "id": "nixos",
+  "name": "NixOS",
+  "os_family": "linux",
+  "vendor": "NixOS",
+  "homepage_url": "https://nixos.org/",
+  "releases": [
+    {
+      "version": "26.05.15079.0dc498bfe49b",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "nixos-minimal-26.05.15079.0dc498bfe49b-x86_64-linux.iso",
+          "size_bytes": 1744830464,
+          "sha256": "68a615138a826afb6e09a8055dd6df606309cd72857f686c15256492ce83c1df",
+          "mirrors": [
+            "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-x86_64-linux.iso"
+          ],
+          "user_supplied_only": false
+        }
+      ],
+      "recipe_version": "1.0"
+    },
+    {
+      "version": "26.05.15079.0dc498bfe49b",
+      "channel": "stable",
+      "architectures": [
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso",
+          "size_bytes": 1822334976,
+          "sha256": "1bf7f6cb42c18112d026e2753baf3808035b1b0fdc4f7d4e04ec4379e03ecc5c",
+          "mirrors": [
+            "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso"
+          ],
+          "user_supplied_only": false
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "id": "debian",
+  "name": "Debian",
+  "os_family": "linux",
+  "vendor": "Debian",
+  "homepage_url": "https://www.debian.org/",
+  "releases": [
+    {
+      "version": "13.8.0",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 512,
+      "min_disk_gib": 10,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "debian-13.8.0-amd64-netinst.iso",
+          "size_bytes": 794820608,
+          "sha256": "3770c7a54890f7574a68a8b402e553806a81d6bccfb379554caad3a9a857931e",
+          "mirrors": [
+            "https://cdimage.debian.org/debian-cd/13.8.0/amd64/iso-cd/debian-13.8.0-amd64-netinst.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://cdimage.debian.org/debian-cd/13.8.0/amd64/iso-cd/SHA256SUMS.sign"
+        }
+      ],
+      "recipe_version": "1.0"
+    },
+    {
+      "version": "13.8.0",
+      "channel": "stable",
+      "architectures": [
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 512,
+      "min_disk_gib": 10,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "debian-13.8.0-arm64-netinst.iso",
+          "size_bytes": 737456128,
+          "sha256": "f4e05f67b5c74e3ff7b24c2a8f889960f9eb31fe0c1ac8513d27d5656958b6b3",
+          "mirrors": [
+            "https://cdimage.debian.org/debian-cd/13.8.0/arm64/iso-cd/debian-13.8.0-arm64-netinst.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://cdimage.debian.org/debian-cd/13.8.0/arm64/iso-cd/SHA256SUMS.sign"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

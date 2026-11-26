@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "arch-linux",
+  "license": "Mixed free software; packages keep their own licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "archinstall",
+        "stability": "experimental"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "archlinux-2026.11.01-x86_64.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://geo.mirror.pkgbuild.com/iso/2026.11.01/sha256sums.txt"
+      ],
+      "signature_urls": [
+        "https://geo.mirror.pkgbuild.com/iso/2026.11.01/archlinux-2026.11.01-x86_64.iso.sig"
+      ]
+    }
+  ],
+  "limitations": "Official x86_64 ISO only. Arch Linux ARM is a separate project and is not implied by this entry. The .sig file was retrieved and was not verified. The dated ISO path is pinned; the latest symlink is not a catalog mirror. Hybrid BIOS and UEFI describes the installer media. RAM and disk figures are catalog installer floors."
+}

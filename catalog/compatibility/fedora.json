@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "fedora",
+  "license": "Mixed free software under the Fedora Project licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "kickstart",
+        "stability": "stable"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "Fedora-Server-netinst-x86_64-45-1.4.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/x86_64/iso/Fedora-Server-45-1.4-x86_64-CHECKSUM"
+      ],
+      "signature_urls": [
+        "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/x86_64/iso/Fedora-Server-45-1.4-x86_64-CHECKSUM"
+      ]
+    },
+    {
+      "filename": "Fedora-Server-netinst-aarch64-45-1.4.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/aarch64/iso/Fedora-Server-45-1.4-aarch64-CHECKSUM"
+      ],
+      "signature_urls": [
+        "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/aarch64/iso/Fedora-Server-45-1.4-aarch64-CHECKSUM"
+      ]
+    }
+  ],
+  "limitations": "Server netinst compose 45-1.4. Both CHECKSUM files are cleartext-signed and were verified with Fedora 45 key 655A4B02F577861E. DVD images are larger and are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
+}

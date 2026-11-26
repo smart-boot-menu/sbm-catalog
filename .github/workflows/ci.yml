@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.95.0
+        with:
+          components: rustfmt, clippy
       - name: Verify repository baseline (Cargo checks activate once Cargo.toml is added)
         run: |
           test -f README.md && test -f AGENTS.md

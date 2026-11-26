@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "ubuntu",
+  "license": "Mixed free and proprietary components; see https://ubuntu.com/legal",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "autoinstall",
+        "stability": "stable"
+      },
+      {
+        "id": "preseed",
+        "stability": "unsupported"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "ubuntu-26.04.1-live-server-amd64.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://releases.ubuntu.com/26.04/SHA256SUMS"
+      ],
+      "signature_urls": [
+        "https://releases.ubuntu.com/26.04/SHA256SUMS.gpg"
+      ]
+    },
+    {
+      "filename": "ubuntu-26.04.1-live-server-arm64.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://cdimage.ubuntu.com/releases/26.04/release/SHA256SUMS"
+      ],
+      "signature_urls": [
+        "https://cdimage.ubuntu.com/releases/26.04/release/SHA256SUMS.gpg"
+      ]
+    }
+  ],
+  "limitations": "Live server installer. aarch64 is generic UEFI and is not an Apple Silicon image. RISC-V, ppc64el, and s390x images exist upstream and are not pinned. The SHA256SUMS.gpg file was retrieved on 2026-11-26 and was not cryptographically verified in this milestone. RAM and disk figures are catalog installer floors, not measurements."
+}

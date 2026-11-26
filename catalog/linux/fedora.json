@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "id": "fedora",
+  "name": "Fedora",
+  "os_family": "linux",
+  "vendor": "Fedora Project",
+  "homepage_url": "https://fedoraproject.org/",
+  "releases": [
+    {
+      "version": "45-1.4",
+      "channel": "stable",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 2048,
+      "min_disk_gib": 15,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "Fedora-Server-netinst-x86_64-45-1.4.iso",
+          "size_bytes": 1272281088,
+          "sha256": "a1e916f139a05955b943cf183b020780cca9c399b02b8f5ec4354c9e5c1dff1a",
+          "mirrors": [
+            "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/x86_64/iso/Fedora-Server-netinst-x86_64-45-1.4.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/x86_64/iso/Fedora-Server-45-1.4-x86_64-CHECKSUM"
+        },
+        {
+          "filename": "Fedora-Server-netinst-aarch64-45-1.4.iso",
+          "size_bytes": 1436913664,
+          "sha256": "311cb9fb35aa39b7df5768c0ccfef571a515d471e824af0d8cbe96de645ddfe8",
+          "mirrors": [
+            "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/aarch64/iso/Fedora-Server-netinst-aarch64-45-1.4.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Server/aarch64/iso/Fedora-Server-45-1.4-aarch64-CHECKSUM"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

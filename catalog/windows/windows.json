@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "id": "windows",
+  "name": "Windows",
+  "os_family": "windows",
+  "vendor": "Microsoft",
+  "homepage_url": "https://www.microsoft.com/windows",
+  "releases": [
+    {
+      "version": "11",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 4096,
+      "min_disk_gib": 64,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "windows-11-user-supplied.iso",
+          "size_bytes": 0,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "mirrors": [],
+          "user_supplied_only": true
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

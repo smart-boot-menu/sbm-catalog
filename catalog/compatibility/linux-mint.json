@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "linux-mint",
+  "license": "Mixed; Linux Mint and Ubuntu component licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "unattended",
+        "stability": "unsupported"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "linuxmint-22.3-cinnamon-64bit.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt"
+      ],
+      "signature_urls": [
+        "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt.gpg"
+      ]
+    }
+  ],
+  "limitations": "Cinnamon 22.3 only. Mate and Xfce hashes were present in the same sums file and are not pinned. No arm64 image is published in that directory. The signature file was not verified. RAM and disk figures are catalog installer floors."
+}

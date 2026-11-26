@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "systemrescue",
+  "license": "GPL-2.0-or-later for the project; the image includes other free software",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "unattended",
+        "stability": "unsupported"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "systemrescue-13.03-amd64.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://www.system-rescue.org/releases/13.03/systemrescue-13.03-amd64.iso.sha256"
+      ],
+      "signature_urls": [
+        "https://www.system-rescue.org/releases/13.03/systemrescue-13.03-amd64.iso.asc"
+      ]
+    }
+  ],
+  "limitations": "Live recovery image, not an operating-system installer. The 13.03 page documented amd64 only, so arm64 is not cataloged. The .asc signature was not verified. direct_installer_boot here means boot the live image. The 1 GiB disk figure is a catalog floor for the live environment, not an installed system."
+}

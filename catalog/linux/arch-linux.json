@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "id": "arch-linux",
+  "name": "Arch Linux",
+  "os_family": "linux",
+  "vendor": "Arch Linux",
+  "homepage_url": "https://archlinux.org/",
+  "releases": [
+    {
+      "version": "2026.11.01",
+      "channel": "rolling",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "archlinux-2026.11.01-x86_64.iso",
+          "size_bytes": 1317568512,
+          "sha256": "01bcdcf01af2f7d58f2794899c834770d25c9bfc945bd092b32bb66672a4a216",
+          "mirrors": [
+            "https://geo.mirror.pkgbuild.com/iso/2026.11.01/archlinux-2026.11.01-x86_64.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://geo.mirror.pkgbuild.com/iso/2026.11.01/archlinux-2026.11.01-x86_64.iso.sig"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "id": "freebsd",
+  "name": "FreeBSD",
+  "os_family": "bsd",
+  "vendor": "The FreeBSD Project",
+  "homepage_url": "https://www.freebsd.org/",
+  "releases": [
+    {
+      "version": "15.1-RELEASE",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "FreeBSD-15.1-RELEASE-amd64-bootonly.iso",
+          "size_bytes": 546666496,
+          "sha256": "3e74120a59512cefc35840443bdd05087c8a010a27cf8a6fbb4f7450824f092e",
+          "mirrors": [
+            "https://download.freebsd.org/releases/ISO-IMAGES/15.1/FreeBSD-15.1-RELEASE-amd64-bootonly.iso"
+          ],
+          "user_supplied_only": false
+        }
+      ],
+      "recipe_version": "1.0"
+    },
+    {
+      "version": "15.1-RELEASE",
+      "channel": "stable",
+      "architectures": [
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "FreeBSD-15.1-RELEASE-arm64-aarch64-bootonly.iso",
+          "size_bytes": 460095488,
+          "sha256": "359136c2af73e03da6f15ad59f0c67bc561ca8b69631d78bfb8f2225e2c9a5ef",
+          "mirrors": [
+            "https://download.freebsd.org/releases/ISO-IMAGES/15.1/FreeBSD-15.1-RELEASE-arm64-aarch64-bootonly.iso"
+          ],
+          "user_supplied_only": false
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

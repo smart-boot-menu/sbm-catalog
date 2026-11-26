@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "id": "proxmox-ve",
+  "name": "Proxmox VE",
+  "os_family": "linux",
+  "vendor": "Proxmox Server Solutions GmbH",
+  "homepage_url": "https://www.proxmox.com/",
+  "releases": [
+    {
+      "version": "9.3-1",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 2048,
+      "min_disk_gib": 16,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "proxmox-ve_9.3-1.iso",
+          "size_bytes": 1808074752,
+          "sha256": "cc4fc97b9ac3a5712ad5b665195753571923a18e11f5c2ebb113fdc29a50bd36",
+          "mirrors": [
+            "https://enterprise.proxmox.com/iso/proxmox-ve_9.3-1.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://enterprise.proxmox.com/iso/proxmox-ve_9.3-1.iso.asc"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

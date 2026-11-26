@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "id": "gparted-live",
+  "name": "GParted Live",
+  "os_family": "recovery",
+  "vendor": "GParted",
+  "homepage_url": "https://gparted.org/",
+  "releases": [
+    {
+      "version": "1.8.1-6",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 512,
+      "min_disk_gib": 1,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "gparted-live-1.8.1-6-amd64.iso",
+          "size_bytes": 720371712,
+          "sha256": "d789c38779f0d6f7026c12f44c2c52a04f66e28a1aea7d51f3045ad1bbf28411",
+          "mirrors": [
+            "https://downloads.sourceforge.net/gparted/gparted-live-1.8.1-6-amd64.iso"
+          ],
+          "user_supplied_only": false,
+          "sha512": "6931ad0f886e8155e5ae25b795167039e4687d0cde952fd561e75bd3990e2fa4b8732a0f8ec83b9d982f8d90baff592093ff2eb612bb91fdde5e45962db440c6",
+          "upstream_signature_url": "https://gparted.org/gparted-live/stable/CHECKSUMS.TXT.gpg"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

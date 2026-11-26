@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "nixos",
+  "license": "Mixed; NixOS components keep their own licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "nixos-install",
+        "stability": "experimental"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "nixos-minimal-26.05.15079.0dc498bfe49b-x86_64-linux.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-x86_64-linux.iso.sha256"
+      ],
+      "signature_urls": []
+    },
+    {
+      "filename": "nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://releases.nixos.org/nixos/26.05/nixos-26.05.15079.0dc498bfe49b/nixos-minimal-26.05.15079.0dc498bfe49b-aarch64-linux.iso.sha256"
+      ],
+      "signature_urls": []
+    }
+  ],
+  "limitations": "Minimal ISO for the 26.05 channel release 26.05.15079.0dc498bfe49b. The .sha256 files are hashes, not signatures. aarch64 is generic UEFI, not Apple Silicon. The 26.11-small channel is not this pin. RAM and disk figures are catalog installer floors."
+}

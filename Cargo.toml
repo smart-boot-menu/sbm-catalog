@@ -1,0 +1,33 @@
+[package]
+name = "sbm-catalog"
+description = "Declarative operating system catalog, verification, download, and TUF publishing"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/smart-boot-menu/sbm-catalog"
+
+[[bin]]
+name = "sbm-catalog"
+path = "src/main.rs"
+
+[dependencies]
+aws-lc-rs = "1"
+base64 = "0.22"
+clap = { version = "4.5", features = ["derive"] }
+futures-util = "0.3"
+hex = "0.4"
+jiff = "0.2"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
+sbm-types = { git = "https://github.com/smart-boot-menu/sbm-common", rev = "28d38450954f0b93815e12f31da92370b13a7462" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tempfile = "3"
+thiserror = "2"
+tokio = { version = "1", features = ["fs", "io-util", "macros", "rt-multi-thread"] }
+tough = "0.24.0"
+url = "2"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

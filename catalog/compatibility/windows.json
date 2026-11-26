@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "windows",
+  "license": "Proprietary Microsoft Windows license. SBM does not redistribute the image.",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "autounattend",
+        "stability": "experimental"
+      },
+      {
+        "id": "wim-apply",
+        "stability": "experimental"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "windows-11-user-supplied.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-or-udf",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [],
+      "signature_urls": []
+    }
+  ],
+  "limitations": "No official consumer ISO hash is pinned. Download is refused until a local import records size and SHA-256. arm64 Windows and Apple Silicon Windows are not cataloged. Unattended setup and WIM apply are recorded and are not executed. Boot configuration data creation remains unresolved. 4096 MiB RAM and 64 GiB disk are Microsoft's published Windows 11 minimums."
+}

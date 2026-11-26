@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "freebsd",
+  "license": "BSD-2-Clause and other licenses shipped in the release",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "installerconfig",
+        "stability": "experimental"
+      },
+      {
+        "id": "bsdinstall",
+        "stability": "stable"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "FreeBSD-15.1-RELEASE-amd64-bootonly.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://download.freebsd.org/releases/ISO-IMAGES/15.1/CHECKSUM.SHA256-FreeBSD-15.1-RELEASE-amd64"
+      ],
+      "signature_urls": []
+    },
+    {
+      "filename": "FreeBSD-15.1-RELEASE-arm64-aarch64-bootonly.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://download.freebsd.org/releases/ISO-IMAGES/15.1/CHECKSUM.SHA256-FreeBSD-15.1-RELEASE-arm64-aarch64"
+      ],
+      "signature_urls": []
+    }
+  ],
+  "limitations": "bootonly images need a network to fetch packages. 15.2 was still BETA3 on 2026-11-20 and is not cataloged. No detached CHECKSUM signature was found at the guessed .asc URL. aarch64 is generic UEFI, not Apple Silicon. The install strategy boots the installer; it does not apply a prebuilt disk image. RAM and disk figures are catalog installer floors."
+}

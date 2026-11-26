@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "catalog_entry_id": "opensuse-leap",
+  "license": "Mixed; openSUSE component licenses",
+  "apple_silicon": "unsupported",
+  "automated_install": {
+    "mechanisms": [
+      {
+        "id": "autoyast",
+        "stability": "stable"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "filename": "Leap-16.1-online-installer-x86_64.install.iso",
+      "architectures": [
+        "x86_64"
+      ],
+      "image_format": "iso9660-hybrid",
+      "boot_methods": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "checksum_urls": [
+        "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-x86_64.install.iso.sha512"
+      ],
+      "signature_urls": [
+        "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-x86_64.install.iso.sha512.asc"
+      ]
+    },
+    {
+      "filename": "Leap-16.1-online-installer-aarch64.install.iso",
+      "architectures": [
+        "aarch64"
+      ],
+      "image_format": "iso9660-uefi",
+      "boot_methods": [
+        "uefi-native"
+      ],
+      "checksum_urls": [
+        "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-aarch64.install.iso.sha512"
+      ],
+      "signature_urls": [
+        "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-aarch64.install.iso.sha512.asc"
+      ]
+    }
+  ],
+  "limitations": "Online installer, not the multi-gigabyte offline DVD. SHA-256 was computed locally on 2026-11-26 after the downloaded bytes matched the published SHA-512. The .sha512.asc signatures were not verified. ppc64le and s390x images are not pinned. aarch64 is generic UEFI, not Apple Silicon. RAM and disk figures are catalog installer floors."
+}

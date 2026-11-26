@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "id": "ubuntu",
+  "name": "Ubuntu",
+  "os_family": "linux",
+  "vendor": "Canonical",
+  "homepage_url": "https://ubuntu.com/",
+  "releases": [
+    {
+      "version": "26.04.1",
+      "channel": "lts",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "ubuntu-26.04.1-live-server-amd64.iso",
+          "size_bytes": 2927861760,
+          "sha256": "cc8a95cde20f6ced61a322420de00f10cc3c90ced545daa46cb9c1a117f1d927",
+          "mirrors": [
+            "https://releases.ubuntu.com/26.04.1/ubuntu-26.04.1-live-server-amd64.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://releases.ubuntu.com/26.04/SHA256SUMS.gpg"
+        }
+      ],
+      "recipe_version": "1.0"
+    },
+    {
+      "version": "26.04.1",
+      "channel": "lts",
+      "architectures": [
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 8,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "ubuntu-26.04.1-live-server-arm64.iso",
+          "size_bytes": 3076861952,
+          "sha256": "af78753c94b924c85c4964c670692a853f7c80299a4064e317edad95462e3168",
+          "mirrors": [
+            "https://cdimage.ubuntu.com/releases/26.04/release/ubuntu-26.04.1-live-server-arm64.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://cdimage.ubuntu.com/releases/26.04/release/SHA256SUMS.gpg"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

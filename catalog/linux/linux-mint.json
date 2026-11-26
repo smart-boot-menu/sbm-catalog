@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "id": "linux-mint",
+  "name": "Linux Mint",
+  "os_family": "linux",
+  "vendor": "Linux Mint",
+  "homepage_url": "https://linuxmint.com/",
+  "releases": [
+    {
+      "version": "22.3",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 2048,
+      "min_disk_gib": 20,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "linuxmint-22.3-cinnamon-64bit.iso",
+          "size_bytes": 3091660800,
+          "sha256": "a081ab202cfda17f6924128dbd2de8b63518ac0531bcfe3f1a1b88097c459bd4",
+          "mirrors": [
+            "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-cinnamon-64bit.iso"
+          ],
+          "user_supplied_only": false,
+          "upstream_signature_url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt.gpg"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}

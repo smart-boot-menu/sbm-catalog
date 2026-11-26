@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "id": "opensuse-leap",
+  "name": "openSUSE Leap",
+  "os_family": "linux",
+  "vendor": "openSUSE Project",
+  "homepage_url": "https://www.opensuse.org/",
+  "releases": [
+    {
+      "version": "16.1",
+      "channel": "stable",
+      "architectures": [
+        "x86_64"
+      ],
+      "supported_platforms": [
+        "uefi-native",
+        "legacy-bios"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 10,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "Leap-16.1-online-installer-x86_64.install.iso",
+          "size_bytes": 774897664,
+          "sha256": "93aa330fddefd26aab5f79c22f581106e05ad86b9cd246fd04049ccfa181fb39",
+          "mirrors": [
+            "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-x86_64.install.iso"
+          ],
+          "user_supplied_only": false,
+          "sha512": "dd3605a3be177497d71b998bb608d7a276717f0f6670f53a6047067c9551cc665f38430e8e72b6ad5f6e181f0f9294502209991da738d04547a1a32a68471f89",
+          "upstream_signature_url": "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-x86_64.install.iso.sha512.asc"
+        }
+      ],
+      "recipe_version": "1.0"
+    },
+    {
+      "version": "16.1",
+      "channel": "stable",
+      "architectures": [
+        "aarch64"
+      ],
+      "supported_platforms": [
+        "uefi-native"
+      ],
+      "min_ram_mib": 1024,
+      "min_disk_gib": 10,
+      "install_strategy": "direct_installer_boot",
+      "artifacts": [
+        {
+          "filename": "Leap-16.1-online-installer-aarch64.install.iso",
+          "size_bytes": 768606208,
+          "sha256": "71d9f43a0e920010526b5e1853d8add4cec1dbfdd7e5f30d132bc99da924d2f3",
+          "mirrors": [
+            "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-aarch64.install.iso"
+          ],
+          "user_supplied_only": false,
+          "sha512": "e324cc6b418b2586d4def9fb8eae14e354a8aa07ed58d5c56a1f2c3d894ac477603a8c73bc2cc38ced0306064de5cfe596aa74e29c56eec0ed938ba578075282",
+          "upstream_signature_url": "https://download.opensuse.org/distribution/leap/16.1/offline/Leap-16.1-online-installer-aarch64.install.iso.sha512.asc"
+        }
+      ],
+      "recipe_version": "1.0"
+    }
+  ]
+}
