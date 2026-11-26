@@ -29,7 +29,10 @@ done
 cp "$vars_src" "$work/efivars.fd"
 log="$work/boot-serial.log"
 rm -f "$log"
-"$qemu" \
+helper=$(CDPATH= cd -- "$root/../sbm-lab/scripts" && pwd)/sbm-resources.sh
+set +e
+"$helper" run linux 2048 2 "$root" "$wait_seconds" -- \
+  "$qemu" \
   -machine virt,accel=hvf \
   -cpu host \
   -m 2048 \
@@ -41,9 +44,12 @@ rm -f "$log"
   -display none \
   -serial "file:$log" \
   -monitor none \
-  -no-reboot &
-pid=$!
-sleep "$wait_seconds"
-kill "$pid" 2>/dev/null || true
-wait "$pid" 2>/dev/null || true
+  -no-reboot
+rc=$?
+set -e
 echo "serial log: $log"
+# The wrapper stops the guest when the watch interval ends.
+if [ "$rc" -eq 124 ]; then
+  exit 0
+fi
+exit "$rc"
